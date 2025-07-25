@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Reputación y Validación</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+      padding: 20px;
+    }
+    h1 {
+      color: #222;
+    }
+    .container {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    label, input, select, textarea {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #2d89ef;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Simulador de Validación y Reputación</h1>
+    <form id="formulario">
+      <label for="nombre">Nombre del Usuario:</label>
+      <input type="text" id="nombre" required>
+
+      <label for="credencial">Credencial Académica (PDF simulado):</label>
+      <input type="file" id="credencial" accept=".pdf">
+
+      <label for="feedback">Retroalimentación del Cliente/Docente:</label>
+      <textarea id="feedback" rows="3"></textarea>
+
+      <label for="tipoFeedback">Tipo de Feedback:</label>
+      <select id="tipoFeedback">
+        <option value="verificado">Verificado</option>
+        <option value="anonimo">Anónimo</option>
+      </select>
+
+      <button type="submit">Generar Reputación</button>
+    </form>
+
+    <table id="resultados">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Validación</th>
+          <th>Feedback</th>
+          <th>Tipo</th>
+          <th>Reputación</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById('formulario').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const tipo = document.getElementById('tipoFeedback').value;
+      const feedback = document.getElementById('feedback').value;
+
+      const validacion = Math.random() > 0.2 ? '✅ Válido' : '❌ No válido';
+      const reputacion = tipo === 'verificado' ? (80 + Math.floor(Math.random() * 20)) : (40 + Math.floor(Math.random() * 30));
+
+      const fila = `<tr>
+        <td>${nombre}</td>
+        <td>${validacion}</td>
+        <td>${feedback || '-'}</td>
+        <td>${tipo}</td>
+        <td>${reputacion}%</td>
+      </tr>`;
+
+      document.querySelector('#resultados tbody').innerHTML += fila;
+      document.getElementById('formulario').reset();
+    });
+  </script>
+</body>
+</html>
